@@ -2,24 +2,24 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Product;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            UserSeeder::class,
+            OrderSeeder::class,
         ]);
+
+        // ponytail: seeder hanya mengisi tabel utama; cart dibuat saat user memakai fitur cart
+        assert(Product::count() >= 5 && User::count() >= 5 && Order::count() >= 5 && Payment::count() >= 5);
     }
 }
